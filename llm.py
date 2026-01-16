@@ -69,11 +69,16 @@ collection = client.get_collection("events_collection")
 #         ids=chunk_ids             # list of ids
 #     )
     
-results  = collection.query(
-    query_texts=["what are the events related to AI?"],
-    n_results=5
-)
-print(results["documents"])
+
+def get_context(query):
+    results  = collection.query(
+        query_texts=[query],
+        n_results=20
+    )
+    context = ""
+    for doc in results['documents'][0]:
+        context += doc + "\n"
+    return context.strip()
     
     
     
